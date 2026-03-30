@@ -172,10 +172,10 @@ def _try_load_checkpoint(model_id: str) -> Optional[nn.Module]:
                         m = FallbackCNN()
                     m.load_state_dict(sd, strict=False)
                     m.eval()
-                    print(f"  ✓ Loaded checkpoint: {ckpt}")
+                    print(f"  [OK]   Loaded checkpoint: {ckpt}")
                     return m
                 except Exception as exc:
-                    print(f"  ✗ Could not load {ckpt}: {exc}")
+                    print(f"  [FAIL] Could not load {ckpt}: {exc}")
     return None
 
 
@@ -214,13 +214,13 @@ async def lifespan(app: FastAPI):
     for model_id in MODEL_REGISTRY:
         m = _try_load_checkpoint(model_id)
         if m is None:
-            print(f"  ⚠  {model_id}: no checkpoint found — using demo fallback")
+            print(f"  [WARN] {model_id}: no checkpoint found — using demo fallback")
             m = FallbackCNN() if "mlp" not in model_id else FallbackMLP()
             m.eval()
         else:
             LOADED_FROM_CHECKPOINT.add(model_id)
         LOADED_MODELS[model_id] = m.to(DEVICE)
-    print(f"  → {len(LOADED_MODELS)} models ready ({len(LOADED_FROM_CHECKPOINT)} from checkpoints)")
+    print(f"  {len(LOADED_MODELS)} models ready ({len(LOADED_FROM_CHECKPOINT)} from checkpoints)")
 
     yield  # application runs here
 

@@ -53,7 +53,7 @@ class Trainer:
     patience : int
         Number of epochs with no AUC improvement before early stopping. Default 3.
     device : torch.device, optional
-        Inference device. Auto-detected (CUDA → CPU) if not provided.
+        Inference device. Auto-detected (CUDA -> CPU) if not provided.
     """
 
     def __init__(
@@ -194,7 +194,7 @@ class Trainer:
                         },
                         save_path,
                     )
-                    print(f"    [checkpoint] saved → {save_path}")
+                    print(f"    [checkpoint] saved -> {save_path}")
             else:
                 self.no_improve += 1
                 if self.no_improve >= self.patience:

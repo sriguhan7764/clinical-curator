@@ -99,7 +99,7 @@ def train_ae(model, loader, epochs, lr, device, save_path, is_vae=False):
             best_loss = avg
             torch.save(model.state_dict(), save_path)
 
-    print(f"  Best {label} loss={best_loss:.5f} → {save_path}")
+    print(f"  Best {label} loss={best_loss:.5f} -> {save_path}")
 
 
 def train_gan(G, D, loader, epochs, lr_g, lr_d, latent_dim, device, out_dir):

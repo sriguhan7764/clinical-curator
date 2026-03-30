@@ -109,7 +109,7 @@ def train_model(model, tr_loader, vl_loader, name, epochs, lr, pos_weight, devic
                  "history": history, "classes": CLASSES},
                 save_path,
             )
-            print(f"    Saved (AUC={best_auc:.4f}) → {save_path}")
+            print(f"    Saved (AUC={best_auc:.4f}) -> {save_path}")
         else:
             no_improve += 1
             if no_improve >= 4:
