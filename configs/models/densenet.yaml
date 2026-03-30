@@ -1,0 +1,19 @@
+# DenseNet-121 production model hyperparameters (Review 4)
+model: densenet
+backbone: densenet121
+n_classes: 14
+dropout: 0.3
+fine_tune: denseblock4_norm5   # layers unfrozen for fine-tuning
+
+training:
+  epochs: 10
+  batch_size: 32
+  learning_rate: 0.0001
+  weight_decay: 0.00001
+  optimizer: AdamW
+  scheduler: onecycle
+  patience: 4
+  subset_frac: 0.15
+  augmentation: strong
+  gradient_clipping: 1.0
+  use_amp: true

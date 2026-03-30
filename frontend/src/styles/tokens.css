@@ -1,0 +1,68 @@
+/* Clinical Curator — Design Tokens */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+:root {
+  /* Brand */
+  --cc-brand:        #1A5FA8;
+  --cc-brand-light:  #E8F0FB;
+
+  /* Risk levels — NEVER change these in dark mode (clinical safety) */
+  --cc-critical-bg:  #FDECEA;
+  --cc-critical-fg:  #D32F2F;
+  --cc-caution-bg:   #FFF3E0;
+  --cc-caution-fg:   #E65100;
+  --cc-normal-bg:    #E8F5E9;
+  --cc-normal-fg:    #2E7D32;
+
+  /* Layout */
+  --cc-page-bg:      #F4F6F8;
+  --cc-sidebar-bg:   #FFFFFF;
+  --cc-card-bg:      #FFFFFF;
+  --cc-border:       rgba(0, 0, 0, 0.08);
+
+  /* Typography */
+  --cc-font:         'Inter', system-ui, sans-serif;
+
+  /* Radii */
+  --cc-radius-card:  12px;
+  --cc-radius-btn:   8px;
+  --cc-radius-badge: 4px;
+
+  /* Shadows */
+  --cc-shadow-card:  0 1px 3px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.04);
+
+  /* Nav */
+  --cc-nav-height:   56px;
+  --cc-sidebar-w:    240px;
+}
+
+[data-theme="dark"] {
+  --cc-page-bg:    #0F1117;
+  --cc-sidebar-bg: #1A1D27;
+  --cc-card-bg:    #1E2130;
+  --cc-border:     rgba(255, 255, 255, 0.08);
+}
+
+/* ── Base reset ────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: var(--cc-font);
+  font-size: 14px;
+  background: var(--cc-page-bg);
+  color: #191c1e;
+  -webkit-font-smoothing: antialiased;
+}
+
+[data-theme="dark"] body { color: #e0e3eb; }
+
+a { color: inherit; text-decoration: none; }
+
+button { cursor: pointer; font-family: var(--cc-font); }
+
+/* ── Material Symbols ──────────────────────────────────────────────── */
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  user-select: none;
+  line-height: 1;
+}

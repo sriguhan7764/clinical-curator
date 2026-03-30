@@ -1,0 +1,15 @@
+# Autoencoder / VAE hyperparameters (Review 3)
+model: autoencoder
+latent_dim: 128
+img_size: 64          # grayscale 64x64 input
+
+training:
+  epochs: 30
+  batch_size: 64
+  learning_rate: 0.001
+  scheduler: cosine
+  subset_frac: 0.10
+  use_amp: true       # mixed precision on GPU
+
+vae:
+  beta: 1.0           # KL weight in ELBO loss

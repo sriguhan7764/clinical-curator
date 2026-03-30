@@ -1,0 +1,62 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Virtual environments
+.venv/
+venv/
+env/
+.env
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# Model weights and checkpoints (large binary files)
+outputs/
+*.pth
+*.pt
+*.onnx
+*.torchscript
+
+# Dataset (download separately)
+data/
+*.csv
+images*/
+
+# Logs and metrics
+logs/
+runs/
+wandb/
+mlruns/
+*.log
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+
+# Node
+node_modules/
+frontend/dist/
+.npm/
+
+# Coverage
+.coverage
+htmlcov/
+
+# Distribution
+MANIFEST
