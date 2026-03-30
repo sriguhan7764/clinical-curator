@@ -1,0 +1,15 @@
+# ChestMLP hyperparameters (Review 1)
+model: mlp
+input_size: 150528   # 224 * 224 * 3
+n_classes: 14
+dropout_rate: 0.4
+
+training:
+  epochs: 10
+  batch_size: 32
+  learning_rate: 0.0001
+  weight_decay: 0.00001
+  optimizer: Adam
+  scheduler: cosine
+  patience: 3
+  subset_frac: 0.15
