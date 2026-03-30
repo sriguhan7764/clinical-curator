@@ -10,6 +10,7 @@ import os
 import random
 import string
 import time
+from contextlib import asynccontextmanager
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Optional
@@ -183,7 +184,7 @@ def _try_load_checkpoint(model_id: str) -> Optional[nn.Module]:
 # ─────────────────────────────────────────────────────────────────────────────
 
 limiter = Limiter(key_func=get_remote_address)
-app = FastAPI(title="Clinical Curator API", version=APP_VERSION)
+app = FastAPI(title="Clinical Curator API", version=APP_VERSION, lifespan=lifespan)
 app.state.limiter = limiter
 app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
@@ -200,8 +201,15 @@ LOADED_FROM_CHECKPOINT: set[str] = set()   # track real vs fallback
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 
-@app.on_event("startup")
-async def _load_models():
+# ---------------------------------------------------------------------------
+# Lifespan — replaces the deprecated @app.on_event("startup") pattern
+# FastAPI docs: https://fastapi.tiangolo.com/advanced/events/#lifespan
+# ---------------------------------------------------------------------------
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    """Load all models on startup; release resources on shutdown."""
+    # ── startup ──────────────────────────────────────────────────────────
     print(f"Clinical Curator v{APP_VERSION} — loading models (device={DEVICE})")
     for model_id in MODEL_REGISTRY:
         m = _try_load_checkpoint(model_id)
@@ -213,6 +221,13 @@ async def _load_models():
             LOADED_FROM_CHECKPOINT.add(model_id)
         LOADED_MODELS[model_id] = m.to(DEVICE)
     print(f"  → {len(LOADED_MODELS)} models ready ({len(LOADED_FROM_CHECKPOINT)} from checkpoints)")
+
+    yield  # application runs here
+
+    # ── shutdown ─────────────────────────────────────────────────────────
+    LOADED_MODELS.clear()
+    LOADED_FROM_CHECKPOINT.clear()
+    print("Clinical Curator — models unloaded, shutdown complete")
 
 
 # ─────────────────────────────────────────────────────────────────────────────
